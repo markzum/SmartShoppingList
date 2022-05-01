@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="tint_color">#C52014</color>
+    <color name="colorPrimary">#1957D3</color>
+    <color name="colorPrimaryDark">#E64A19</color>
 </resources>

@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/activity_main.xml" value="0.24010416666666667" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable/roundedbutton.xml" value="0.247" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/add_new_product.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/product.xml" value="0.536" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/toolbar.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/menu/menu_main.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
