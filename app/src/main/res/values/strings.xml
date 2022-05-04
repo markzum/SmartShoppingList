@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Что купить</string>
+    <string name="go_back">Вернуться</string>
+    <string name="back">Назад</string>
+    <string name="it_is_name_of_family">Имя семьи:</string>
+    <string name="it_is_password_of_family">Пароль семьи:</string>
+    <string name="log_in_family">Войдите в семью</string>
+    <string name="name_of_family">Имя семьи</string>
+    <string name="password">Пароль</string>
+    <string name="or">Или</string>
+    <string name="create_family">Создайте семью</string>
+    <string name="create">Создать</string>
+    <string name="log_in">Войти</string>
+    <string name="name_of_new_family">Имя новой семьи</string>
+    <string name="log_out">Выйти</string>
+    <string name="db_error">Произошла ошибка с базой данных!</string>
 </resources>

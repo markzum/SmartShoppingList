@@ -11,13 +11,13 @@
     <!--android:icon="@drawable/ic_search"-->
     <item
         android:id="@+id/action_finish_purchase"
-        android:orderInCategory="200"
+        android:orderInCategory="100"
         android:icon="@drawable/ic_baseline_check_circle_outline_30"
         android:title="Закончить покупку"
         app:showAsAction="ifRoom"/>
-    <!--<item
-        android:id="@+id/action_user"
-        android:orderInCategory="300"
-        android:title="User"
-        app:showAsAction="ifRoom" />-->
+    <item
+        android:id="@+id/action_show_profile"
+        android:orderInCategory="200"
+        android:title="Профиль"
+        app:showAsAction="never" />
 </menu>

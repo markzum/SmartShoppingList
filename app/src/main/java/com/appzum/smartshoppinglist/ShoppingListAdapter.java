@@ -1,7 +1,10 @@
 package com.appzum.smartshoppinglist;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -66,7 +69,9 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
     public ShoppingListAdapter(List<Product> products) {
         this.products = products;
-        mDatabase = FirebaseDatabase.getInstance().getReference("smartShoppingList");
+
+        mDatabase = FirebaseDatabase.getInstance().getReference("smartShoppingList")
+                .child("families").child(MainActivity.family_name).child(MainActivity.family_password);
     }
 
     @Override
