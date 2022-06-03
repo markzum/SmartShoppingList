@@ -13,33 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+
 
 public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapter.ProductViewHolder> {
 
@@ -93,15 +77,12 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         productViewHolder.productDescription.setText(products.get(i).getDescription());
         CheckBox checkBox = productViewHolder.checkBox;
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            Log.i(TAG, "onBindViewHolder: pressed");
             if (x[0]) {
                 x[0] = false;
-                Log.i(TAG, "onBindViewHolder: return");
                 return;
             }
 
             if (products.get(i).getStatus().equals("purchased")){
-                Log.i(TAG, "onBindViewHolder: U'll not pass!!!");
                 checkBox.setChecked(true);
                 return;
             }

@@ -3,14 +3,11 @@ package com.appzum.smartshoppinglist;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,7 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
         singOutBtn.setOnClickListener((View v) -> {
             new AlertDialog.Builder(this)
                     //.setTitle("")
-                    .setMessage("Вы уверены что хотите выйти?")
+                    .setMessage(R.string.are_you_sure_you_want_log_out)
                     .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                         SharedPreferences.Editor sPrefEdit = sPref.edit();
                         sPrefEdit.putString("family_name", "none");

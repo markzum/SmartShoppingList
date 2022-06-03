@@ -14,4 +14,21 @@
     <string name="name_of_new_family">Имя новой семьи</string>
     <string name="log_out">Выйти</string>
     <string name="db_error">Произошла ошибка с базой данных!</string>
+    <string name="family_name_or_password_error">Ошибка! Неправильное имя семьи или пароль.</string>
+    <string name="this_family_already_exists">Такая семья уже существует!</string>
+    <string name="guide_text">Это приложение \"Что купить\"!\n
+        Вы можете добавлять товары в список покупок с помощью кнопки в правом нижнем углу экрана и
+        удалять товары удержанием кнопки удаления напротив названия товара. \n
+        Отмечайте товары, которые кладете в корзину. \n
+        После оплаты покупок нажмите на кнопку \"Завершить покупку\" (галочка) в верху экрана, чтобы
+        товары \"в корзине\" отметились, как купленные.\n
+        Все изменения в списке покупок синхронизируются на всех устройствах!</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="purchase_completed_successfully">Покупка успешно завершена!</string>
+    <string name="product_successfully_added">Товар успешно добавлен!</string>
+    <string name="family_created">Семья создана!</string>
+    <string name="there_is_nothing_here">Здесь ничего нет</string>
+    <string name="are_you_sure_you_want_log_out">Вы уверены что хотите выйти из аккаунта?</string>
+    <string name="authentication_error">Ошибка аутентификации</string>
+    <string name="password_is_short">Пароль должен состоять не менее чем из 6 символов!</string>
 </resources>

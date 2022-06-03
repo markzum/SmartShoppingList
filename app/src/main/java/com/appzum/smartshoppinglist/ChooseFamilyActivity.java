@@ -1,6 +1,6 @@
 package com.appzum.smartshoppinglist;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,15 +11,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.util.Map;
 
 public class ChooseFamilyActivity extends AppCompatActivity {
 
@@ -48,16 +47,42 @@ public class ChooseFamilyActivity extends AppCompatActivity {
         joinFamilyBtn.setOnClickListener((View v) -> {
             String familyName = familyNameJoinET.getText().toString();
             String familyPassword = familyPasswordJoinET.getText().toString();
+            FirebaseUser currentUser = mAuth.getCurrentUser();
 
-            SharedPreferences sPref = getSharedPreferences("family", MODE_PRIVATE);
-            SharedPreferences.Editor sPrefEdit = sPref.edit();
-            sPrefEdit.putString("family_name", familyName);
-            sPrefEdit.putString("family_password", familyPassword);
-            sPrefEdit.apply();
+            mDatabase = FirebaseDatabase.getInstance().getReference("smartShoppingList")
+                    .child("families").child(familyName).child(familyPassword);
 
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            mDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (!dataSnapshot.exists()) {
+                        new AlertDialog.Builder(ChooseFamilyActivity.this)
+                                .setMessage(R.string.family_name_or_password_error)
+                                .setPositiveButton(android.R.string.ok, null)
+                                .show();
+                    } else {
+                        SharedPreferences sPref = getSharedPreferences("family", MODE_PRIVATE);
+                        SharedPreferences.Editor sPrefEdit = sPref.edit();
+                        sPrefEdit.putString("family_name", familyName);
+                        sPrefEdit.putString("family_password", familyPassword);
+                        sPrefEdit.putString("is_first_launch", "true");
+                        sPrefEdit.apply();
+
+                        mDatabase.child("users").child(currentUser.getUid()).setValue(currentUser.getEmail());
+
+                        Intent intent = new Intent(ChooseFamilyActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+
+                        mDatabase.removeEventListener(this);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                }
+            });
         });
 
 
@@ -67,29 +92,49 @@ public class ChooseFamilyActivity extends AppCompatActivity {
             String debug_product_id = CreateId.createId();
             FirebaseUser currentUser = mAuth.getCurrentUser();
 
-            mDatabase = FirebaseDatabase.getInstance().getReference("smartShoppingList");
+            mDatabase = FirebaseDatabase.getInstance().getReference("smartShoppingList")
+                    .child("families").child(familyName);
 
-            mDatabase.child("families").child(familyName).child(familyPassword)
-                    .child("products").child(debug_product_id)
-                    .setValue(new Product(debug_product_id,
-                            "DebugProduct",
-                            "DebugProduct",
-                            "debug"));
+            mDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        new AlertDialog.Builder(ChooseFamilyActivity.this)
+                                .setMessage(R.string.this_family_already_exists)
+                                .setPositiveButton(android.R.string.ok, null)
+                                .show();
+                    } else {
+                        mDatabase.child(familyPassword)
+                                .child("products").child(debug_product_id)
+                                .setValue(new Product(debug_product_id,
+                                        "DebugProduct",
+                                        "DebugProduct",
+                                        "debug"));
 
-            mDatabase.child("families").child(familyName).child(familyPassword)
-                    .child("users").child(currentUser.getUid()).setValue(currentUser.getEmail());
+                        mDatabase.child(familyPassword)
+                                .child("users").child(currentUser.getUid()).setValue(currentUser.getEmail());
 
-            SharedPreferences sPref = getSharedPreferences("family", MODE_PRIVATE);
-            SharedPreferences.Editor sPrefEdit = sPref.edit();
-            sPrefEdit.putString("family_name", familyName);
-            sPrefEdit.putString("family_password", familyPassword);
-            sPrefEdit.putString("is_first_launch", "true");
-            sPrefEdit.putString("is_created", "true");
-            sPrefEdit.apply();
+                        SharedPreferences sPref = getSharedPreferences("family", MODE_PRIVATE);
+                        SharedPreferences.Editor sPrefEdit = sPref.edit();
+                        sPrefEdit.putString("family_name", familyName);
+                        sPrefEdit.putString("family_password", familyPassword);
+                        sPrefEdit.putString("is_first_launch", "true");
+                        sPrefEdit.putString("is_created", "true");
+                        sPrefEdit.apply();
 
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+                        Intent intent = new Intent(ChooseFamilyActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+
+                        mDatabase.removeEventListener(this);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                }
+            });
         });
     }
 }

@@ -7,11 +7,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,8 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -150,8 +147,22 @@ public class MainActivity extends AppCompatActivity {
                     sPrefEdit.putString("is_first_launch", "true");
                     sPrefEdit.apply();
                     mAuth.signOut();
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                     return;
                 }
+                for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                    String id = (String) messageSnapshot.child("id").getValue();
+                    String name = (String) messageSnapshot.child("name").getValue();
+                    String description = (String) messageSnapshot.child("description").getValue();
+                    String status = (String) messageSnapshot.child("status").getValue();
+
+                    if (!status.equals("debug")) {
+                        products.add(new Product(id, name, description, status));
+                    }
+                }
+                /*
                 Map<String, HashMap<String, String>> x = (Map<String, HashMap<String, String>>) dataSnapshot.getValue();
                 for (Map.Entry<String, HashMap<String, String>> entry : x.entrySet()) {
                     String key = entry.getKey();
@@ -182,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
                     if (!status.equals("debug")) {
                         products.add(new Product(id, name, description, status));
                     }
-                }
+                }*/
 
                 // Sort products
                 Collections.sort(products, new Comparator<Product>() {
@@ -219,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!products.isEmpty()) {
                     listIsEmptyTW.setText("");
                 } else {
-                    listIsEmptyTW.setText("Здесь ничего нет");
+                    listIsEmptyTW.setText(R.string.there_is_nothing_here);
                 }
                 // Create RecyclerView
                 RecyclerView recyclerView = findViewById(R.id.recycler1);
@@ -253,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
                         description_of_product,
                         "need"));
 
-        Toast.makeText(this, "Товар успешно добавлен!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.product_successfully_added), Toast.LENGTH_SHORT).show();
     }
 
 
@@ -279,29 +290,11 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("markzum", "Error getting data", task.getException());
                     } else {
                         for (DataSnapshot messageSnapshot : task.getResult().getChildren()) {
-                            Map<String, String> x = (Map<String, String>) messageSnapshot.getValue();
-                            String id = "none";
-                            String name = "none";
-                            String description = "none";
-                            String status = "need";
-                            for (Map.Entry<String, String> entry : x.entrySet()) {
-                                String key = entry.getKey();
-                                String val = entry.getValue();
-                                switch (key) {
-                                    case "id":
-                                        id = val;
-                                        break;
-                                    case "name":
-                                        name = val;
-                                        break;
-                                    case "description":
-                                        description = val;
-                                        break;
-                                    case "status":
-                                        status = val;
-                                        break;
-                                }
-                            }
+                            String id = (String) messageSnapshot.child("id").getValue();
+                            String name = (String) messageSnapshot.child("name").getValue();
+                            String description = (String) messageSnapshot.child("description").getValue();
+                            String status = (String) messageSnapshot.child("status").getValue();
+
                             if (status.equals("picked")) {
                                 temp_products.add(new Product(id, name, description, "purchased"));
                             }
@@ -313,10 +306,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-            Toast.makeText(this, "Покупка успешно завершена!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.purchase_completed_successfully, Toast.LENGTH_SHORT).show();
             return true;
 
-        } else if (id == R.id.action_show_profile){
+        } else if (id == R.id.action_show_profile) {
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
         }
@@ -338,35 +331,28 @@ public class MainActivity extends AppCompatActivity {
             String family_password = sPref.getString("family_password", "none");
             String is_first_launch = sPref.getString("is_first_launch", "false");
             String is_created = sPref.getString("is_created", "false");
-            if (is_created.equals("true")){
+            if (is_created.equals("true")) {
 
                 SharedPreferences.Editor sPrefEdit = sPref.edit();
                 sPrefEdit.putString("is_created", "false");
                 sPrefEdit.apply();
                 new AlertDialog.Builder(this)
-                        .setTitle("Семья создана!")
-                        .setMessage("Семья \"" + family_name + "\" создана!\n" +
-                                "Пароль семьи: " + family_password)
+                        .setTitle(R.string.family_created)
+                        .setMessage(getString(R.string.it_is_name_of_family) + " " + family_name + "\n" +
+                                getString(R.string.it_is_password_of_family) + " " + family_password)
                         .setPositiveButton(android.R.string.ok, null).show();
-                        // .setIcon(android.R.drawable.ic_dialog_alert)
+                // .setIcon(android.R.drawable.ic_dialog_alert)
 
             }
-            if (is_first_launch.equals("true")){
+            if (is_first_launch.equals("true")) {
                 SharedPreferences.Editor sPrefEdit = sPref.edit();
                 sPrefEdit.putString("is_first_launch", "false");
                 sPrefEdit.apply();
                 new AlertDialog.Builder(this)
-                        .setTitle("Добро пожаловать!")
-                        .setMessage("Это приложение \"Что купить" +
-                                "\"!\nВы можете добавлять товары в список покупок с помощью " +
-                                "кнопки в правом нижнем углу экрана и удалять товары удержанием " +
-                                "кнопки удаления напротив названия товара. \nОтмечайте товары, " +
-                                "которые кладете в корзину. \nПосле оплаты покупок нажмите на " +
-                                "кнопку \"Завершить покупку\" (галочка) в верху экрана, чтобы " +
-                                "Товары \"в корзине\" отметились, как купленные.\nВсе изменения " +
-                                "в списке покупок синхронизируются на всех устройствах!")
+                        .setTitle(R.string.welcome)
+                        .setMessage(R.string.guide_text)
                         .setPositiveButton(android.R.string.ok, null).show();
-                        // .setIcon(android.R.drawable.ic_dialog_alert)
+                // .setIcon(android.R.drawable.ic_dialog_alert)
 
             }
         }

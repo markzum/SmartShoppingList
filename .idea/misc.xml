@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.247" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable/ic_baseline_delete_30.xml" value="0.247" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable/ic_menu_camera.xml" value="0.247" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.247" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.247" />
