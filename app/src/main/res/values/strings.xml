@@ -31,4 +31,8 @@
     <string name="are_you_sure_you_want_log_out">Вы уверены что хотите выйти из аккаунта?</string>
     <string name="authentication_error">Ошибка аутентификации</string>
     <string name="password_is_short">Пароль должен состоять не менее чем из 6 символов!</string>
+    <string name="edit">Изменить</string>
+    <string name="delete">Удалить</string>
+    <string name="information">Информация</string>
+    <string name="duplicate_and_restore">Дублировать и восстановить</string>
 </resources>

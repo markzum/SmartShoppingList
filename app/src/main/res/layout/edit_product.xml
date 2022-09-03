@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/name_tv_edit_product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Товар:"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/name_et_edit_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Введите название товара"
+        android:minHeight="48dp">
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/description_tv_edit_product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Примечание:"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/description_et_edit_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Введите примечание к товару"
+        android:minHeight="48dp" />
+
+</LinearLayout>

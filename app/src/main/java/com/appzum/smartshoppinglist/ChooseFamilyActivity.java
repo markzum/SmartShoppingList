@@ -65,7 +65,6 @@ public class ChooseFamilyActivity extends AppCompatActivity {
                         SharedPreferences.Editor sPrefEdit = sPref.edit();
                         sPrefEdit.putString("family_name", familyName);
                         sPrefEdit.putString("family_password", familyPassword);
-                        sPrefEdit.putString("is_first_launch", "true");
                         sPrefEdit.apply();
 
                         mDatabase.child("users").child(currentUser.getUid()).setValue(currentUser.getEmail());
@@ -95,6 +94,7 @@ public class ChooseFamilyActivity extends AppCompatActivity {
             mDatabase = FirebaseDatabase.getInstance().getReference("smartShoppingList")
                     .child("families").child(familyName);
 
+
             mDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -109,7 +109,11 @@ public class ChooseFamilyActivity extends AppCompatActivity {
                                 .setValue(new Product(debug_product_id,
                                         "DebugProduct",
                                         "DebugProduct",
-                                        "debug"));
+                                        "debug",
+                                        "01.01.2022 12:00",
+                                        "01.01.2022 12:00",
+                                        "admin",
+                                        "false"));
 
                         mDatabase.child(familyPassword)
                                 .child("users").child(currentUser.getUid()).setValue(currentUser.getEmail());
@@ -118,7 +122,6 @@ public class ChooseFamilyActivity extends AppCompatActivity {
                         SharedPreferences.Editor sPrefEdit = sPref.edit();
                         sPrefEdit.putString("family_name", familyName);
                         sPrefEdit.putString("family_password", familyPassword);
-                        sPrefEdit.putString("is_first_launch", "true");
                         sPrefEdit.putString("is_created", "true");
                         sPrefEdit.apply();
 

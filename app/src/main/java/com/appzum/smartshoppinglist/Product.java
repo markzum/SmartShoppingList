@@ -5,12 +5,24 @@ public class Product implements Comparable<Product> {
     private String name;
     private String description;
     private String status;
+    private String created;
+    private String edited;
+    private String creator;
+    private String purchased;
 
-    public Product(String id, String name, String description, String status) {
+
+    public Product(String id, String name,
+                   String description, String status,
+                   String created, String edited,
+                   String creator, String purchased) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.status = status;
+        this.created = created;
+        this.edited = edited;
+        this.creator = creator;
+        this.purchased = purchased;
     }
 
     @Override
@@ -67,4 +79,35 @@ public class Product implements Comparable<Product> {
         this.description = description;
     }
 
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    public String getEdited() {
+        return edited;
+    }
+
+    public void setEdited(String edited) {
+        this.edited = edited;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getPurchased() {
+        return purchased;
+    }
+
+    public void setPurchased(String purchased) {
+        this.purchased = purchased;
+    }
 }

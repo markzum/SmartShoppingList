@@ -4,25 +4,36 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.247" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable/default_dot.xml" value="0.2595" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable/ic_baseline_check_circle_outline_30.xml" value="0.2075" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable/ic_baseline_delete_30.xml" value="0.247" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable/ic_menu_camera.xml" value="0.247" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.247" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.247" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable/roundedbutton.xml" value="0.247" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable/selected_dot.xml" value="0.2595" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable/side_nav_bar.xml" value="0.247" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable/tab_selector.xml" value="0.2595" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/drawable/tutorial_gradient_background.xml" value="0.2595" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/activity_choose_family.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/activity_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/activity_test.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/activity_tutorial.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/add_new_product.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/app_bar_test.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/content_test.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/edit_product.xml" value="0.4" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/fragment_first_tutorial.xml" value="0.1" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/fragment_second_tutorial.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/fragment_third_tutorial.xml" value="0.20863616930312098" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/layout_login.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/layout_register.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/product.xml" value="0.536" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/layout/toolbar.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/menu/menu_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudioProjects/SmartShoppingList/app/src/main/res/menu/menu_product.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

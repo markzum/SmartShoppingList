@@ -11,10 +11,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,9 +30,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -123,17 +129,35 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Start new product activity
+        // Show new-product window
         Button addBtn = findViewById(R.id.addBtn);
         addBtn.setOnClickListener((View v) -> {
-            Intent intent = new Intent(this, AddNewProductActivity.class);
-            startActivityForResult(intent, 1);
-
+            LayoutInflater li = LayoutInflater.from(this);
+            View promptsView = li.inflate(R.layout.edit_product, null);
+            final EditText name_et_edit_product = promptsView.findViewById(R.id.name_et_edit_product);
+            final EditText description_et_edit_product = promptsView.findViewById(R.id.description_et_edit_product);
+            new AlertDialog.Builder(this)
+                    .setTitle("Добавление товара")
+                    .setView(promptsView)
+                    .setPositiveButton(android.R.string.ok, (dialog2, which) -> {
+                        String new_id = CreateId.createId();
+                        String datetime = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(new Date());
+                        mDatabase.child("products").child(new_id)
+                                .setValue(new Product(new_id,
+                                        name_et_edit_product.getText().toString(),
+                                        description_et_edit_product.getText().toString(),
+                                        "need",
+                                        datetime,
+                                        datetime,
+                                        mAuth.getCurrentUser().getEmail(),
+                                        "false"));
+                    })
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setCancelable(false).show();
         });
 
 
         // listen products change
-
         mDatabase.child("products").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -157,43 +181,16 @@ public class MainActivity extends AppCompatActivity {
                     String name = (String) messageSnapshot.child("name").getValue();
                     String description = (String) messageSnapshot.child("description").getValue();
                     String status = (String) messageSnapshot.child("status").getValue();
+                    String created = (String) messageSnapshot.child("created").getValue();
+                    String edited = (String) messageSnapshot.child("edited").getValue();
+                    String creator = (String) messageSnapshot.child("creator").getValue();
+                    String purchased = (String) messageSnapshot.child("purchased").getValue();
 
                     if (!status.equals("debug")) {
-                        products.add(new Product(id, name, description, status));
+                        products.add(new Product(id, name, description, status, created, edited,
+                                creator, purchased));
                     }
                 }
-                /*
-                Map<String, HashMap<String, String>> x = (Map<String, HashMap<String, String>>) dataSnapshot.getValue();
-                for (Map.Entry<String, HashMap<String, String>> entry : x.entrySet()) {
-                    String key = entry.getKey();
-                    HashMap<String, String> val = entry.getValue();
-
-                    String id = "none";
-                    String name = "none";
-                    String description = "none";
-                    String status = "need";
-                    for (Map.Entry<String, String> entry2 : val.entrySet()) {
-                        String key2 = entry2.getKey();
-                        String val2 = entry2.getValue();
-                        switch (key2) {
-                            case "id":
-                                id = val2;
-                                break;
-                            case "name":
-                                name = val2;
-                                break;
-                            case "description":
-                                description = val2;
-                                break;
-                            case "status":
-                                status = val2;
-                                break;
-                        }
-                    }
-                    if (!status.equals("debug")) {
-                        products.add(new Product(id, name, description, status));
-                    }
-                }*/
 
                 // Sort products
                 Collections.sort(products, new Comparator<Product>() {
@@ -236,7 +233,8 @@ public class MainActivity extends AppCompatActivity {
                 RecyclerView recyclerView = findViewById(R.id.recycler1);
                 LinearLayoutManager llm = new LinearLayoutManager(MainActivity.this);
                 recyclerView.setLayoutManager(llm);
-                ShoppingListAdapter adapter = new ShoppingListAdapter(products);
+                ShoppingListAdapter adapter = new ShoppingListAdapter(MainActivity.this,
+                        products);
                 recyclerView.setAdapter(adapter);
             }
 
@@ -247,30 +245,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) {
-            return;
-        }
-        String name_of_product = data.getStringExtra("name");
-        String description_of_product = data.getStringExtra("description");
-
-        String new_id = CreateId.createId();
-        mDatabase.child("products").child(new_id)
-                .setValue(new Product(new_id,
-                        name_of_product,
-                        description_of_product,
-                        "need"));
-
-        Toast.makeText(this, getString(R.string.product_successfully_added), Toast.LENGTH_SHORT).show();
-    }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -294,9 +270,14 @@ public class MainActivity extends AppCompatActivity {
                             String name = (String) messageSnapshot.child("name").getValue();
                             String description = (String) messageSnapshot.child("description").getValue();
                             String status = (String) messageSnapshot.child("status").getValue();
+                            String created = (String) messageSnapshot.child("created").getValue();
+                            String edited = (String) messageSnapshot.child("edited").getValue();
+                            String creator = (String) messageSnapshot.child("creator").getValue();
 
                             if (status.equals("picked")) {
-                                temp_products.add(new Product(id, name, description, "purchased"));
+                                temp_products.add(new Product(id, name, description,
+                                        "purchased", created, edited, creator,
+                                        new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(new Date())));
                             }
                         }
                         for (Product product : temp_products) {
@@ -321,15 +302,15 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
         if (currentUser == null) {
-            Intent intent = new Intent(this, LoginActivity.class);
+            Intent intent = new Intent(this, TutorialActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         } else {
             SharedPreferences sPref = getSharedPreferences("family", MODE_PRIVATE);
             String family_name = sPref.getString("family_name", "none");
             String family_password = sPref.getString("family_password", "none");
-            String is_first_launch = sPref.getString("is_first_launch", "false");
             String is_created = sPref.getString("is_created", "false");
             if (is_created.equals("true")) {
 
@@ -340,17 +321,6 @@ public class MainActivity extends AppCompatActivity {
                         .setTitle(R.string.family_created)
                         .setMessage(getString(R.string.it_is_name_of_family) + " " + family_name + "\n" +
                                 getString(R.string.it_is_password_of_family) + " " + family_password)
-                        .setPositiveButton(android.R.string.ok, null).show();
-                // .setIcon(android.R.drawable.ic_dialog_alert)
-
-            }
-            if (is_first_launch.equals("true")) {
-                SharedPreferences.Editor sPrefEdit = sPref.edit();
-                sPrefEdit.putString("is_first_launch", "false");
-                sPrefEdit.apply();
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.welcome)
-                        .setMessage(R.string.guide_text)
                         .setPositiveButton(android.R.string.ok, null).show();
                 // .setIcon(android.R.drawable.ic_dialog_alert)
 
