@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Product> products = new ArrayList<>();
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
+    private FirebaseAnalytics mFirebaseAnalytics;
     private Toolbar toolbar;
 
     public static String family_name;
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         SharedPreferences sPref = getSharedPreferences("family", MODE_PRIVATE);
         family_name = sPref.getString("family_name", "none");
@@ -140,6 +143,9 @@ public class MainActivity extends AppCompatActivity {
                     .setTitle("Добавление товара")
                     .setView(promptsView)
                     .setPositiveButton(android.R.string.ok, (dialog2, which) -> {
+                        /*Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name_et_edit_product.getText().toString());
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle);*/
                         String new_id = CreateId.createId();
                         String datetime = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(new Date());
                         mDatabase.child("products").child(new_id)

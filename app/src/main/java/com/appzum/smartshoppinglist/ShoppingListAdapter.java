@@ -126,11 +126,11 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             mDatabase.child("products").child(old_product_id).setValue(new_product);
 
             if (local_status.equals("picked")) {
-                productViewHolder.rootLayout.setBackgroundColor(Color.parseColor("#bbbbbb"));
+                productViewHolder.rootLayout.setBackgroundResource(R.color.picked_product_bg);
                 productViewHolder.productName.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 productViewHolder.productDescription.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
-                productViewHolder.rootLayout.setBackgroundColor(Color.parseColor("#ffffff"));
+                productViewHolder.rootLayout.setBackgroundResource(R.color.need_product_bg);
                 productViewHolder.productName.setPaintFlags(0);
                 productViewHolder.productDescription.setPaintFlags(0);
             }
@@ -138,13 +138,13 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
 
         if (products.get(i).getStatus().equals("picked")) {
-            productViewHolder.rootLayout.setBackgroundColor(Color.parseColor("#bbbbbb"));
+            productViewHolder.rootLayout.setBackgroundResource(R.color.picked_product_bg);
             productViewHolder.productName.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             productViewHolder.productDescription.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             x[0] = true;
             checkBox.setChecked(true);
         } else if (products.get(i).getStatus().equals("purchased")){
-            productViewHolder.rootLayout.setBackgroundColor(Color.parseColor("#20DF07"));
+            productViewHolder.rootLayout.setBackgroundResource(R.color.purchased_product_bg);
             productViewHolder.productName.setTypeface(null, Typeface.ITALIC);
             productViewHolder.productName.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
             productViewHolder.productDescription.setTypeface(null, Typeface.ITALIC);
@@ -154,7 +154,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
                 checkBox.setChecked(true);
             }
         } else {
-            productViewHolder.rootLayout.setBackgroundColor(Color.parseColor("#ffffff"));
+            productViewHolder.rootLayout.setBackgroundResource(R.color.need_product_bg);
             productViewHolder.productName.setPaintFlags(0);
             productViewHolder.productDescription.setPaintFlags(0);
         }

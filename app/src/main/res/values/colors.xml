@@ -10,4 +10,12 @@
     <color name="tint_color">#C52014</color>
     <color name="colorPrimary">#1957D3</color>
     <color name="colorPrimaryDark">#E64A19</color>
+
+    <color name="need_product_bg">#ffffff</color>
+    <color name="picked_product_bg">#bbbbbb</color>
+    <color name="purchased_product_bg">#20DF07</color>
+
+    <color name="login_title">#000000</color>
+    <color name="login_layout">#ffffff</color>
+    <color name="login_background">#00BCD4</color>
 </resources>

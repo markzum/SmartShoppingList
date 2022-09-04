@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="need_product_bg">#000000</color>
+    <color name="picked_product_bg">#818181</color>
+    <color name="purchased_product_bg">#1fc609</color>
+
+    <color name="login_title">#ffffff</color>
+    <color name="login_layout">#000000</color>
+    <color name="login_background">#2A682B</color>
+</resources>
